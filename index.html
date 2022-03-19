@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/bundle-polkadot-util.js"></script>
+    <script src="js/bundle-polkadot-util-crypto.js"></script>
+    <script src="js/bundle-polkadot-extension-dapp.js"></script>
+    <script src="js/ethers-5.2.umd.min.js"></script>
+    <title>Substrate - EVM Address Associator</title>
+</head>
+<body>
+
+    <h2 id="hello">Hello, please move your mouse in the gray area.</h2>
+    <div id="area" style="width: 100%; height: 500px; background-color: silver">
+
+    </div>
+    <div id="signing" style="display: none;">
+        <h2>Entropy message generated. Sign it by using the buttons below.</h2>
+    <button id="evmSign" class="signButton">Sign with EVM account</button>
+    <button id="subSign" class="signButton">Sign with Substrate account</button>
+    <select name="subAddress" id="subAddress" style="display: none">
+        
+    </select>
+
+    <div id="output">
+        <div id="evmOutput" style="display: none">EVM signature by address <span class="address"></span> is <span class="signature"></span>.</div>
+        <div id="subOutput" style="display: none">Substrate signature by address <span class="address"></span> is <span class="signature"></span>.</div>
+    </div>
+
+    <div id="submission" style="display: none">
+        <h4>Please input the URL of the server to submit this information to. If you were given an API key, also input that.</h4>
+        <form id="submitform" action="" method="post">
+            <label for="server_url">Server URL:
+            <input type="url" name="url" required="true" id="server_url">
+        </label>
+        <label for="server_key">API Key:
+            <input type="text" name="key" id="server_key">
+        </label>
+        <button type="submit">Submit</button>
+        </form>
+        <p>The server will get this JSON payload:</p>
+        <code><pre style="word-break: break-all; white-space: pre-wrap;">{"evmData":{"signature":"<span id="payloadEvmSig"></span>","address":"<span id="payloadEvmAddress"></span>"},"subData":{"signature":"<span id="payloadSubSig"></span>","address":"<span id="payloadSubAddress"></span>"},"entropy":"<span id="payloadEntropy"></span>","server_key":"<span id="payloadServerKey"></span>"}</pre></code>
+    </div>
+</div>
+    <script src="js/main.js"></script>
+</body>
+</html>
