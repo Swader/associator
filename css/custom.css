@@ -1,0 +1,16 @@
+#output div {
+  margin-bottom: 20px;
+}
+
+#output .signature,
+#output .address {
+  color: orange;
+}
+
+#submitform label,
+#submitform label input {
+  width: 100%;
+}
+#submitform button {
+  display: block;
+}
