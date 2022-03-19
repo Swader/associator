@@ -8,8 +8,8 @@ Simple tool to sign the same random message with both an EVM and a Substrate add
 - add progress bar on entropy generation
 - add nice error / success popups on server submission
 - make prettier with some styling and layouts
-- add input for API and API key so that users can plug in a third party server to register and persist this association
-  - the POST request should include original message, pubkeys of both addresses, and both signed messages. Server should run a Verify on both before persisting
+- ✅ ~~add input for API and API key so that users can plug in a third party server to register and persist this association~~
+  - ✅ ~~the POST request should include original message, pubkeys of both addresses, and both signed messages. Server should run a Verify on both before persisting~~
 - deploy on decentralized storage
 
 ## Contributing
