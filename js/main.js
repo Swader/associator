@@ -1,14 +1,16 @@
 const entropy = [];
+const MAX_LEN = 6;
 let entropyString = "";
 let captureStart = false;
-
 let evmData = {};
 let subData = {};
 
-const area = document.getElementById("area");
+const area = document.querySelector("#area");
+
 area.addEventListener("mousemove", function (e) {
-  const MAX_LEN = 64;
-  if (entropy.length >= MAX_LEN) return;
+  if (entropy.length >= MAX_LEN) {
+    finishEntropy();
+  }
   const now = Date.now();
   if (now >= 1 && now % 10 !== 0) return;
   if (!captureStart) {
@@ -20,27 +22,21 @@ area.addEventListener("mousemove", function (e) {
   const pxPlusPy = e.pageX + e.pageY;
   const ret = Math.round((pxPlusPy / iwPlusIh) * 255);
   entropy.push(ret);
-  //console.log("0-255:", ret);
-  if (entropy.length >= MAX_LEN) {
-    //console.log("entropy:", entropy);
-    console.log(
-      "shuffledEntropy:",
-      entropy.sort(() => Math.random() - 0.5)
-    );
-
-    entropyString = entropy.join().replace(/,/g, "");
-    console.log(entropyString);
-    document.querySelector("#payloadEntropy").textContent = entropyString;
-
-    // Make buttons visible
-    document.querySelector("#area").remove();
-    document.querySelector("#hello").remove();
-    document.querySelector("#signing").style.display = "block";
-
-    document.querySelector("#evmSign").addEventListener("click", signWithEvm);
-    document.querySelector("#subSign").addEventListener("click", signWithSub);
-  }
 });
+
+function finishEntropy() {
+  entropy.sort(() => Math.random() - 0.5);
+  entropyString = entropy.join().replace(/,/g, "");
+  document.querySelector("#payloadEntropy").textContent = entropyString;
+
+  // Make buttons visible
+  area.remove();
+  document.querySelector("#hello").remove();
+  document.querySelector("#signing").style.display = "block";
+
+  document.querySelector("#evmSign").addEventListener("click", signWithEvm);
+  document.querySelector("#subSign").addEventListener("click", signWithSub);
+}
 
 async function signWithEvm(e) {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -80,8 +76,6 @@ async function signWithSub(e) {
       return web3Accounts();
     })
     .then(async (accounts) => {
-      console.log(accounts);
-
       // Make user select an account
       for (let i = 0; i < accounts.length; i++) {
         options += `<option value='${i}'>${accounts[i].address}</option>`;
